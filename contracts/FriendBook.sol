@@ -5,18 +5,18 @@ contract FriendBook {
     // Partners
     struct Message {
         address sender;
-        address reciever;
+        address receiver;
         string content;
     }
 
     Message[] messages;
 
     //submit message
-    function submitMessage(string memory content, address reciever)
+    function submitMessage(string memory content, address receiver)
         public
         returns (Message memory)
     {
-        Message memory newMessage = Message(msg.sender, reciever, content);
+        Message memory newMessage = Message(msg.sender, receiver, content);
         messages.push(newMessage);
         return newMessage;
     }
@@ -26,11 +26,11 @@ contract FriendBook {
         return messages;
     }
 
-    //get user messages
+    //get caller messages
     function getCallerMessages() public view returns (Message[] memory) {
         uint256 messagesCount = 0;
         for (uint256 i = 0; i < messages.length; i++) {
-            if (msg.sender == messages[i].reciever) {
+            if (msg.sender == messages[i].receiver) {
                 messagesCount++;
             }
         }
@@ -39,7 +39,7 @@ contract FriendBook {
         if (messagesCount > 0) {
             uint256 j = 0;
             for (uint256 i = 0; i < messages.length; i++) {
-                if (msg.sender == messages[i].reciever) {
+                if (msg.sender == messages[i].receiver) {
                     callerMessages[j] = messages[i];
                     j++;
                 }
